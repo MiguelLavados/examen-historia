@@ -2,7 +2,7 @@ import streamlit as st
 import random
 from datetime import datetime
 
-# Configuración de la página web
+# Configuración de la página web optimizada para móviles
 st.set_page_config(page_title="COGNUSS Extenso V2", page_icon="⚖️", layout="centered")
 
 # Banco de Datos Original
@@ -35,97 +35,113 @@ banco_extenso = {
     ]
 }
 
-# Verificación de Caducidad
+# Control de Caducidad
 if datetime.now() > datetime(2026, 6, 30):
     st.error("❌ ENTORNO DE EVALUACIÓN CADUCADO")
-    st.warning("Este programa de estudio expiró el 30 de junio de 2026. Comunícate con el administrador para una actualización.")
-    st.info("Creado por Miguel López Lavados — mlopezlavado@gmail.com")
     st.stop()
 
-# Encabezado Visual
-st.title("📚 COGNUSS EXTENSO V2")
-st.subheader("HISTORIA DEL DERECHO MEDIEVAL")
-st.caption("Programa creado por Miguel López Lavados | Contacto: mlopezlavado@gmail.com")
-st.caption("Derechos Reservados — Caducidad: 30 de Junio de 2026")
-st.markdown("---")
-
-# Inicialización de variables de estado
+# Inicialización de variables de estado fijas en memoria (Evita lag)
 if 'preguntas' not in st.session_state:
     st.session_state.preguntas = []
-    st.session_state.puntos = 0
-    st.session_state.respondido = {}
-    st.session_state.test_iniciado = False
+    st.session_state.respuestas_usuario = {}
+    st.session_state.indice_actual = 0
+    st.session_state.examen_activo = False
+    st.session_state.finalizado = False
 
-# Sidebar de Configuración del Examen
-st.sidebar.header("⚙️ Configuración del Test")
+# Título de la App
+st.title("📚 COGNUSS EXTENSO V2")
+st.caption("Programa creado por Miguel López Lavados | Caduca: 30-Jun-2026")
+st.markdown("---")
+
+# Panel de control lateral
+st.sidebar.header("⚙️ Menú Examen")
 bloques = list(banco_extenso.keys())
-opcion_bloque = st.sidebar.selectbox("Selecciona Bloque Temático:", ["--- Seleccionar ---"] + bloques + ["Evaluar Todo el Cedulario Mezclado"])
-modo = st.sidebar.radio("Modalidad de Evaluación:", ["Modo Alternativas", "Modo Escrito (Desarrollo)"])
+opcion_bloque = st.sidebar.selectbox("Selecciona Bloque:", ["--- Seleccionar ---"] + bloques + ["Todo Mezclado"])
+modo = st.sidebar.radio("Modalidad:", ["Alternativas", "Escrito (Desarrollo)"])
 
-if st.sidebar.button("🚀 Iniciar / Reiniciar Examen"):
+if st.sidebar.button("🚀 Iniciar Test"):
     if opcion_bloque != "--- Seleccionar ---":
-        if opcion_bloque == "Evaluar Todo el Cedulario Mezclado":
+        if opcion_bloque == "Todo Mezclado":
             st.session_state.preguntas = [q for b in banco_extenso.values() for q in b]
             random.shuffle(st.session_state.preguntas)
         else:
             st.session_state.preguntas = banco_extenso[opcion_bloque].copy()
         
-        st.session_state.puntos = 0
-        st.session_state.respondido = {}
-        st.session_state.test_iniciado = True
+        st.session_state.respuestas_usuario = {}
+        st.session_state.indice_actual = 0
+        st.session_state.examen_activo = True
+        st.session_state.finalizado = False
     else:
-        st.sidebar.error("Por favor selecciona un bloque temático.")
+        st.sidebar.error("Selecciona un bloque válido.")
 
-# Desarrollo del Cuestionario
-if st.session_state.test_iniciado:
-    st.write(f"### 📋 Evaluando: {opcion_bloque}")
+# Lógica de navegación rápida (Pregunta por pregunta)
+if st.session_state.examen_activo and not st.session_state.finalizado:
+    total = len(st.session_state.preguntas)
+    idx = st.session_state.indice_actual
+    p = st.session_state.preguntas[idx]
     
-    with st.form("formulario_examen"):
-        for idx, p in enumerate(st.session_state.preguntas):
-            st.markdown(f"**Pregunta {idx + 1}:** {p['p']}")
-            
-            if modo == "Modo Alternativas":
-                opcion_usuario = st.radio(f"Selecciona tu respuesta para la pregunta {idx+1}: ", p['a'], key=f"p_{idx}")
-                st.session_state.respondido[idx] = opcion_usuario
+    st.write(f"### 📋 Pregunta {idx + 1} de {total}")
+    st.info(p['p'])
+    
+    # Capturar respuesta sin refrescar bruscamente la página
+    if modo == "Alternativas":
+        opcion_guardada = st.session_state.respuestas_usuario.get(idx, None)
+        indice_defecto = p['a'].index(opcion_guardada) if opcion_guardada in p['a'] else 0
+        
+        resp = st.radio("Elige tu opción:", p['a'], index=indice_defecto, key=f"radio_{idx}")
+        st.session_state.respuestas_usuario[idx] = resp
+    else:
+        texto_guardado = st.session_state.respuestas_usuario.get(idx, "")
+        resp_t = st.text_area("Escribe tu respuesta analítica:", value=texto_guardado, key=f"text_{idx}")
+        st.session_state.respuestas_usuario[idx] = resp_t
+        
+        st.markdown("**Criterio de Evaluación de Cátedra:**")
+        st.caption(p['e'])
+        evalua = st.radio("¿Tu respuesta cumple el criterio?", ["No evaluado", "Sí (Sumar punto)", "No (Cero puntos)"], key=f"eval_{idx}")
+        st.session_state.respuestas_usuario[f"eval_{idx}"] = evalua
+
+    st.markdown("---")
+    
+    # Botones de navegación en horizontal para móviles
+    col1, col2, col3 = st.columns()
+    
+    with col1:
+        if idx > 0:
+            if st.button("⬅️ Anterior"):
+                st.session_state.indice_actual -= 1
+                st.rerun()
+                
+    with col2:
+        if idx < total - 1:
+            if st.button("Siguiente ➡️"):
+                st.session_state.indice_actual += 1
+                st.rerun()
+                
+    with col3:
+        if st.button("📥 Terminar"):
+            st.session_state.finalizado = True
+            st.rerun()
+
+# Pantalla final de Resultados (Súper rápida)
+elif st.session_state.finalizado:
+    st.success("## 📊 Resultados de la Evaluación")
+    puntos = 0
+    total = len(st.session_state.preguntas)
+    
+    for idx, p in enumerate(st.session_state.preguntas):
+        st.markdown(f"**{idx + 1}. {p['p']}**")
+        resp_u = st.session_state.respuestas_usuario.get(idx, "")
+        
+        if modo == "Alternativas":
+            if resp_u and resp_u.startswith(p['c']):
+                st.success(f"Correcto. Respondiste: {resp_u}")
+                puntos += 1
             else:
-                st.text_area("Redacta tu respuesta analítica:", key=f"t_{idx}")
-                evalua = st.radio("¿Tu respuesta abarcó los conceptos del criterio oficial?", ["No evaluar aún", "Sí (Sumar punto)", "No (Cero puntos)"], key=f"e_{idx}")
-                st.session_state.respondido[idx] = evalua
-            
-            st.markdown("---")
-        
-        enviar = st.form_submit_button("📥 Finalizar y Obtener Nota")
-        
-        if enviar:
-            puntos_obtenidos = 0
-            total_preguntas = len(st.session_state.preguntas)
-            
-            st.write("## 📊 Resultados de la Evaluación")
-            
-            for idx, p in enumerate(st.session_state.preguntas):
-                st.write(f"**Pregunta {idx + 1}:** {p['p']}")
-                
-                if modo == "Modo Alternativas":
-                    resp_u = st.session_state.respondido.get(idx)
-                    if resp_u and resp_u.startswith(p['c']):
-                        st.success(f"¡Correcto! Elegiste {resp_u}")
-                        puntos_obtenidos += 1
-                    else:
-                        st.error(f"Incorrecto. Elegiste {resp_u}. La opción correcta era la {p['c']}.")
-                else:
-                    evaluacion_u = st.session_state.respondido.get(idx)
-                    if evaluacion_u == "Sí (Sumar punto)":
-                        puntos_obtenidos += 1
-                        st.success("Punto sumado por autoevaluación.")
-                    else:
-                        st.info("No se sumó puntaje.")
-                
-                st.info(f"💡 **Fundamento de Cátedra:** {p['e']}")
-                st.markdown("---")
-            
-            nota = round((puntos_obtenidos / total_preguntas) * 6 + 1, 1) if total_preguntas > 0 else 1.0
-            
-            st.metric(label="Puntaje Total", value=f"{puntos_obtenidos} de {total_preguntas}")
-            if nota >= 4.0:
-                st.balloons()
-                st.success(f"🎉 ¡Aprobado! Tu nota estimada es: **{nota}**")
+                st.error(f"Incorrecto. Respondiste: {resp_u} | Correcta: {p['c']}")
+        else:
+            eval_u = st.session_state.respuestas_usuario.get(f"eval_{idx}", "")
+            if eval_u == "Sí (Sumar punto)":
+                puntos += 1
+                st.success("Punto aprobado en autoevaluación.")
+            else:
+                st.info("No sumó puntaje.")
