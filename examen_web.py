@@ -12,7 +12,7 @@ banco_extenso = {
         {"p": "¿Qué hito ocurrió en el III Concilio de Toledo (589)?", "a": ["A) Cánones con fuerza de ley civil y unión Iglesia-Estado.", "B) Abolición del derecho romano vulgar."], "c": "A", "e": "Conversión al catolicismo de Recaredo para unificar espiritualmente el reino."},
         {"p": "¿Qué norma se fijó en el IV Concilio de Toledo (633)?", "a": ["A) Monarquía puramente hereditaria.", "B) Carácter electivo de la monarquía por magnates y obispos."], "c": "B", "e": "Buscaba frenar las constantes guerras civiles ('morbus gothicus')."},
         {"p": "¿Qué impacto territorial tuvo el Liber Iudiciorum (654)?", "a": ["A) Unificó el derecho territorialmente derogando textos previos.", "B) Otorgó plena autonomía a los duques locales."], "c": "A", "e": "Puso fin a la dualidad jurídica penal y civil peninsular."},
-        {"p": "¿Qué reforma introdujo Ervigio al Liber en 681?", "a": ["A) Dura legislación de persecución y exclusión contra judíos.", "B) Tradujo los manuscritos oficiales al romance castellano."], "c": "A", "e": "Adaptó las normas a las presiones doctrinales de la Iglesia."},
+        {"p": "¿Qué reforma introdujo Ervigio al Liber en 681?", "a": ["A) Dura legislación de persecution y exclusión contra judíos.", "B) Tradujo los manuscritos oficiales al romance castellano."], "c": "A", "e": "Adaptó las normas a las presiones doctrinales de la Iglesia."},
         {"p": "¿Qué fue la versión Vulgata del Liber (Siglo VIII)?", "a": ["A) Copia custodiada de forma secreta en Roma.", "B) Edición no oficial con adiciones que ayudó a sobrevivir el texto."], "c": "B", "e": "Juristas del norte añadieron costumbres locales tras la caída toledana."}
     ],
     "2. Alta Edad Media y Derecho Local": [
@@ -23,7 +23,7 @@ banco_extenso = {
     ],
     "3. Baja Edad Media y Derecho Comun": [
         {"p": "¿Qué fuentes combinadas dieron origen al Derecho Común?", "a": ["A) Corpus Iuris Civilis, Derecho Canónico y Derecho Feudal.", "B) Fuero Juzgo, Siete Partidas y Ordenamiento de Alcalá."], "c": "A", "e": "Surgió formalmente a partir del siglo XII en la Universidad de Bolonia."},
-        {"p": "¿Cuál era el método de estudio de los Glosadores?", "a": ["A) Notas aclaratorias marginales (glosas) al texto literal romano.", "B) Redactar códigos modernos basados en la razón natural."], "c": "A", "e": "Su enfoque era estrictamente exegético para recuperar la pureza clásica."},
+        {"p": "¿Cuál era el método de estudio de los Glosadores?", "a": ["A) Notas aclaratorias marginales (glosas) al texto literal romano.", "B) Redactar códigos modernos basados en la razón natural."], "c": "A", "e": "Su enfoque era strictly exegético para recuperar la pureza clásica."},
         {"p": "¿En qué se diferenciaban los Postglosadores o Comentaristas?", "a": ["A) Abandonaron el uso técnico del latín académico.", "B) Adaptaron los textos romanos a la práctica de su época."], "c": "B", "e": "Su método pragmático permitió aplicar el derecho romano en tribunales."},
         {"p": "¿Por qué las monarquías impulsaron el Derecho Común?", "a": ["A) Sostenía que la voluntad del monarca tiene fuerza de ley.", "B) Fomentaba libertades democráticas vecinales."], "c": "A", "e": "Utilizaron el derecho técnico para socavar los privilegios feudales."},
         {"p": "¿Por qué las Siete Partidas no se aplicaron de inmediato?", "a": ["A) Resistencia de nobles y municipios que defendían sus fueros.", "B) El clero consideró que contradecía los decretales."], "c": "A", "e": "El fuerte absolutismo del código real provocó el rechazo estamental."}
@@ -102,8 +102,8 @@ if st.session_state.examen_activo and not st.session_state.finalizado:
 
     st.markdown("---")
     
-    # Botones de navegación en horizontal para móviles
-    col1, col2, col3 = st.columns()
+    # Botones de navegación en horizontal corregidos para móviles
+    col1, col2, col3 = st.columns(3)
     
     with col1:
         if idx > 0:
