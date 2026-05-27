@@ -32,7 +32,7 @@ if date.today() > date(2026, 6, 30):
     st.error("🚨 Esta aplicación ha caducado. El período de uso autorizado finalizó el 30 de Junio de 2026.")
     st.stop()
 
-# --- BANCO DE DATOS ORIGINAL (BLOQUES 1 AL 4 COMPATIBILIDAD) ---
+# --- BANCO DE DATOS ORIGINAL CORREGIDO ---
 banco_extenso = {
     "1. Periodo Visigodo y Liber Iudiciorum": [
         {"p": "¿En qué consiste la teoría de la 'personalidad de las leyes'?", "a": ["Aplicación según el origen étnico", "Aplicación universal en el territorio", "Derecho exclusivo de la Iglesia", "Leyes dictadas solo por el rey"], "c": "Aplicación según el origen étnico"},
