@@ -2,10 +2,8 @@ import streamlit as st
 import random
 from datetime import date
 
-# Configuración de la página web optimizada para móviles y PC
 st.set_page_config(page_title="COGNUSS Extenso V2", page_icon="🎓", layout="centered")
 
-# Estilos CSS avanzados con temporizador extendido a 25 segundos y espacio fijo aislado
 st.markdown("""
 <style>
 @keyframes blurFadeOut {
@@ -30,77 +28,68 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Validación de fecha de caducidad obligatoria (30 de Junio de 2026)
 if date.today() > date(2026, 6, 30):
     st.error("🚨 Esta aplicación ha caducado. El período de uso autorizado finalizó el 30 de Junio de 2026.")
     st.stop()
 
-# --- MENÚ LATERAL GENERAL CON LOS CRÉDITOS SOLICITADOS ---
 st.sidebar.markdown("## ⚙️ Menú Examen")
-
-opcion_bloque = st.sidebar.selectbox(
-    "Selecciona Bloque:",
-    ["--- Seleccionar ---", "Bloque 5: Examen Repetición"]
-)
+opcion_bloque = st.sidebar.selectbox("Selecciona Bloque:", ["--- Seleccionar ---", "Bloque 5: Examen Repetición"])
 
 st.sidebar.markdown("---")
 st.sidebar.markdown("### 👥 Propiedad Intelectual & Créditos")
-st.sidebar.info("""
-* **Profesor Titular**: Dr. Oscar Enrique Dávila  
-* **Recopilación (Escribana)**: Danitza Araya  
-* **Desarrollador**: Miguel López Lavados  
-* **Agente Colaborador IA**: IA (Tu Asistente)  
-* **Motor de Conocimientos**: COGNUSS 2  
+st.sidebar.info("* **Profesor Titular**: Dr. Oscar Enrique Dávila\n* **Recopilación (Escribana)**: Danitza Araya\n* **Desarrollador**: Miguel López Lavados\n* **Agente Colaborador IA**: IA\n* **Motor de Conocimientos**: COGNUSS 2\n\n--- \n🔒 **Derechos Reservados © 2026**\n📅 *Fecha de Caducidad: 30 de Jun-2026*")
 
----
-🔒 **Derechos Reservados © 2026**  
-📅 *Fecha de Caducidad: 30 de Jun-2026*
-""")
-
-# --- INTERFAZ DINÁMICA ---
 if opcion_bloque == "--- Seleccionar ---":
     st.title("🛡️ COGNUSS EXTENSO V2")
     st.subheader("Programa creado por Miguel López Lavados | Caduca: 30-Jun-2026")
     st.markdown("---")
     st.info("👈 Selecciona el Bloque 5 en el menú lateral izquierdo para cargar el examen de repetición.")
 
-# --- SECCIÓN MAESTRA: BLOQUE 5 EXAMEN REPETICIÓN ---
 elif opcion_bloque == "Bloque 5: Examen Repetición":
     st.title("⚖️ Examen de Repetición")
     st.subheader("Cuestionario Maestro Integrado - Temas 1, 5, 10, 13 y 18")
     st.markdown("---")
-    
-    modo = st.radio(
-        "👉 **Selecciona la modalidad de evaluación para este bloque:**",
-        ["Cuestionario Escrito (Memorización Gradual)", "Test de Selección Múltiple (Alternativas Cortas)"],
-        index=0
-    )
+    modo = st.radio("👉 **Selecciona la modalidad de evaluación:**", ["Cuestionario Escrito (Memorización Gradual)", "Test de Selección Múltiple (Alternativas Cortas)"], index=0)
     st.markdown("---")
     
     if modo == "Cuestionario Escrito (Memorización Gradual)":
-        st.info("⏱️ **Método Gradual Activo**: Al presionar el botón de un tema, la respuesta oficial de la cátedra aparecerá nítida por **25 segundos** y luego se difuminará automáticamente para que redactes tu respuesta.")
+        st.info("⏱️ **Método Gradual Activo**: Al presionar el botón, la respuesta oficial de la cátedra aparecerá por **25 segundos** antes de difuminarse.")
         
-        # Tema 1
-        st.markdown("#### Tópico N.º 1: 1. Importancia de los Concilios en la España Visigoda (Toledo 3, 4, 8, 12 y 13)")
+        st.markdown("#### Tópico N.º 1: 1. Importancia de los Concilios en la España Visigoda")
         if st.button("👁️ Mostrar Respuesta Maestra - Tema 1", key="btn_esc_1"):
-            st.markdown('<div class="respuesta-maestra-box"><b>Respuesta de la Cátedra (10-15 Líneas):</b><br>Los Concilios de Toledo se consolidaron como asambleas político-religiosas y órganos colegisladores fundamentales tras la conversión del reino visigodo al catolicismo en el año 589 d.C. Bajo esta dinámica, el monarca junto al Aula Real fijaba la agenda temática inaugurando las sesiones y entregando el Tomus Regius, que contenía los proyectos de ley que los obispos debían estudiar, debatir y corregir de manera unánime. Los acuerdos resultantes se transformaban en cánones conciliares y se promulgaban formalmente como leyes civiles del reino mediante la Lex in confirmatione concilii dictada por el monarca. El III Concilio (589 d.C.) decretó la conversión del rey Recaredo, unificando religiosamente el territorio. El IV Concilio (633 d.C.), presidido por San Isidoro, institucionalizó la monarquía electiva mediante el canon 75 para regular la sucesión real y combatir el "morbo gótico". El VIII Concilio (653 d.C.) legitimó el acceso al trono de Recesvinto y redactó la histórica primera edición del Liber Iudiciorum. El XII Concilio (680 d.C.) validó la polémica sucesión de Ervigio frente a Wamba y endureció drásticamente la legislación antisemita. Finalmente, el XIII Concilio (683 d.C.) limitó el absolutismo monárquico al otorgar el "Habeas Corpus Visigodo", brindando sólidas garantías judiciales a los nobles frente a arrestos arbitrarios de la corona.</div>', unsafe_allow_html=True)
-        st.text_area("✍️ Redacta tu desarrollo en base a lo memorizado:", key="in_esc_1", height=110, placeholder="Escriba aquí su respuesta redactada...")
-        st.markdown("<br><hr><br>", unsafe_allow_html=True)
+            st.markdown('<div class="respuesta-maestra-box"><b>Respuesta Oficial:</b> Los Concilios de Toledo se consolidaron como asambleas político-religiosas y órganos colegisladores fundamentales tras la conversión al catolicismo en el 589 d.C. El monarca junto al Aula Real fijaba la agenda con el Tomus Regius, transformando los acuerdos en cánones convalidados mediante la Lex in confirmatione concilii. El III Concilio decretó la conversión de Recaredo, unificando el territorio. El IV Concilio, presidido por San Isidoro, institucionalizó la monarquía electiva (canon 75) contra el morbo gótico. El VIII Concilio redactó la primera edición del Liber Iudiciorum bajo Recesvinto. El XII Concilio validó a Ervigio y endureció las leyes antisemitas. El XIII Concilio otorgó el Habeas Corpus Visigodo, protegiendo a los nobles de arrestos reales arbitrarios.</div>', unsafe_allow_html=True)
+        st.text_area("✍️ Redacta tu desarrollo:", key="in_esc_1", height=110)
+        st.markdown("<br>", unsafe_allow_html=True)
 
-        # Tema 5
         st.markdown("#### Tópico N.º 5: 5. El Derecho Local en la Alta Edad Media: Cartas Pueblas y Fueros")
         if st.button("👁️ Mostrar Respuesta Maestra - Tema 5", key="btn_esc_5"):
-            st.markdown('<div class="respuesta-maestra-box"><b>Respuesta de la Cátedra (10-15 Líneas):</b><br>El derecho local altomedieval eclosionó con fuerza debido a la profunda fragmentación política de la península y a la imperiosa necesidad de los reyes cristianos de repoblar las tierras ganadas a los musulmanes tras la invasión del 711 d.C. En este escenario de frontera, las Cartas Pueblas constituyeron el tipo documental más rudimentario y primario, limitándose a regular exclusivamente las condiciones agrarias y económicas mínimas para el asentamiento de los colonos. Los Fueros (tanto breves como extensos) evolucionaron a partir de estas cartas, otorgando a los municipios un estatuto jurídico particular, privilegios de exención fiscal y una marcada autonomía organizativa. Los fueros breves fijaban las libertades básicas indispensables para atraer habitantes a las zonas de peligro militar fronterizo. Posteriormente, los fueros extensos de los siglos XII y XIII (como el célebre modelo de Cuenca-Teruel) desarrollaron ordenamientos jurídicos íntegros y complejos que abarcaban derecho civil, penal, procesal y organizativo municipal. Este marcado particularismo jurídico generó un mosaico de derechos locales autónomos que debilitó temporalmente la potestad legislativa centralizada de la corona, moldeando el autogobierno comunal.</div>', unsafe_allow_html=True)
-        st.text_area("✍️ Redacta tu desarrollo en base a lo memorizado:", key="in_esc_5", height=110, placeholder="Escriba aquí su respuesta redactada...")
-        st.markdown("<br><hr><br>", unsafe_allow_html=True)
+            st.markdown('<div class="respuesta-maestra-box"><b>Respuesta Oficial:</b> El derecho local altomedieval surgió por la fragmentación política tras la invasión del 711 d.C. y la urgencia de repoblar las fronteras cristianas. Las Cartas Pueblas constituyeron el tipo documental más primario, regulando solo condiciones económicas y agrarias para los colonos. Los Fueros evolucionaron otorgando estatutos jurídicos privilegiados, exención fiscal y autonomía organizativa municipal. Los fueros breves fijaban exenciones básicas para la supervivencia fronteriza. Los fueros extensos (siglos XII-XIII, como el de Cuenca) estructuraron ordenamientos íntegros penales, civiles y procesales. Este particularismo creó un mosaico normativo autónomo que debilitó el poder central real.</div>', unsafe_allow_html=True)
+        st.text_area("✍️ Redacta tu desarrollo:", key="in_esc_5", height=110)
+        st.markdown("<br>", unsafe_allow_html=True)
 
-        # Tema 10
-        st.markdown("#### Tópico N.º 10: 10. Características del Derecho Territorial en el Reino de Castilla: Fuero de Albedrío y Fazañas")
+        st.markdown("#### Tópico N.º 10: 10. Características del Derecho Territorial en Castilla")
         if st.button("👁️ Mostrar Respuesta Maestra - Tema 10", key="btn_esc_10"):
-            st.markdown('<div class="respuesta-maestra-box"><b>Respuesta de la Cátedra (10-15 Líneas):</b><br>El derecho castellano altomedieval se caracterizó por su profundo particularismo regional, su carácter puramente consuetudinario y no escrito, su origen popular y su total independencia de la tradición romana del Liber. Al carecer de un código legal escrito y uniforme, el derecho se construyó sobre las costumbres locales arraigadas en la comunidad. De acuerdo a la tradición histórica, en el año 843 d.C. los castellanos rechazaron formalmente el Liber Iudiciorum usado en León, llegando a quemar los textos legales por considerarlos ajenos a su realidad. En su lugar, instituyeron el "Fuero de Albedrío", un sistema judicial flexible donde los jueces locales de la comunidad resolvían los pleitos basándose en su propio sentido de la justicia y criterio de equidad. Por su parte, las "Fazañas" eran las sentencias o juicios de albedrío dictados por estos magistrados populares que se convertían de inmediato en precedentes judiciales vinculantes y obligatorios para futuros casos de la misma región. Este sistema judicial configuró un ordenamiento dinámico, casuístico y alejado de la tradición romanista escrito y del monarquismo legislativo, adaptándose con rapidez a los peligros cambiantes de la frontera.</div>', unsafe_allow_html=True)
-        st.text_area("✍️ Redacta tu desarrollo en base a lo memorizado:", key="in_esc_10", height=110, placeholder="Escriba aquí su respuesta redactada...")
-        st.markdown("<br><hr><br>", unsafe_allow_html=True)
+            st.markdown('<div class="respuesta-maestra-box"><b>Respuesta Oficial:</b> El derecho castellano altomedieval fue consuetudinario, popular, no escrito e independiente del Liber. En el 843 d.C., Castilla rechazó formalmente las leyes visigodas de León quemando los textos. Adoptó el Fuero de Albedrío, un sistema donde jueces de la comunidad resolvían litigios según equidad y costumbres. Las Fazañas eran estas sentencias judiciales que operaban de inmediato como precedentes vinculantes. Ante una situación nueva fronteriza, el fallo del juez se convertía en la regla jurídica obligatoria para casos futuros, creando un orden dinámico y flexible.</div>', unsafe_allow_html=True)
+        st.text_area("✍️ Redacta tu desarrollo:", key="in_esc_10", height=110)
+        st.markdown("<br>", unsafe_allow_html=True)
 
-        # Tema 13
         st.markdown("#### Tópico N.º 13: 13. Formación del Derecho Común Romano Canónico")
         if st.button("👁️ Mostrar Respuesta Maestra - Tema 13", key="btn_esc_13"):
+            st.markdown('<div class="respuesta-maestra-box"><b>Respuesta Oficial:</b> El Ius Commune integró el derecho romano justinianeo, el canónico y el feudal en la Baja Edad Media. Inició en el siglo XI al redescubrirse el Digesto y fundarse la Escuela de Bolonia (1088 d.C.) por Irnerio. Los Glosadores (siglos XI-XIII) hicieron un análisis teórico y exegético literal fijando el sentido mediante glosas interlineales. Los Comentaristas (siglos XIII-XV), liderados por Bartolo de Sassoferrato, adaptaron el derecho romano a la práctica de los tribunales. Se complementó con el Decreto de Graciano (1140 d.C.), que armonizó cánones de la Iglesia, sirviendo a los monarcas para centralizar el poder.</div>', unsafe_allow_html=True)
+        st.text_area("✍️ Redacta tu desarrollo:", key="in_esc_13", height=110)
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        st.markdown("#### Tópico N.º 18: 18. El Derecho Territorial en el Reino de Asturias-León")
+        if st.button("👁️ Mostrar Respuesta Maestra - Tema 18", key="btn_esc_18"):
+            st.markdown('<div class="respuesta-maestra-box"><b>Respuesta Oficial:</b> Asturias-León defendió la continuidad legalista escrita del reino visigodo mediante el neogoticismo, oponiéndose al albedrío castellano. Aplicó rigurosamente el Liber Iudiciorum en el tribunal regio (Palatium). La territorialización se consolidó en el 1017 d.C. con las leyes territoriales de Alfonso V en las Cortes de León. En 1241 d.C., Fernando III ordenó su traducción oficial al romance bajo el nombre de Fuero Juzgo. Este texto unificado rigió las ciudades reconquistadas y se proyectó a América, aplicándose formalmente en tribunales chilenos hasta el siglo XIX ante la falta de un Código Penal patrio.</div>', unsafe_allow_html=True)
+        st.text_area("✍️ Redacta tu desarrollo:", key="in_esc_18", height=110)
+        st.markdown("<br>", unsafe_allow_html=True)
+        
+    else:
+        st.warning("⚠️ **Control de Memoria**: Ninguna opción viene marcada por defecto.")
+        sel_1 = st.radio("Pregunta 1: ¿Mecanismo legal de promulgación civil de los Concilios?", ["La Lex in confirmatione concilii dictada por el monarca.", "El Tomus Regius del Oficio Palatino.", "El Fuero de Albedrío del Senatus.", "El canon conciliar eclesiástico."], index=None, key="rad_1")
+        sel_2 = st.radio("Pregunta 2: ¿Diferencia entre Cartas Pueblas y Fueros extensos?", ["Las Cartas Pueblas regulaban solo condiciones económicas y agrarias de asentamiento; los Fueros extensos eran ordenamientos jurídicos municipales integrales.", "Las Cartas Pueblas eran eclesiásticas y los Fueros extensos regulaban la guerra civil.", "Las Cartas Pueblas eran escritas y los Fueros extensos costumbres orales.", "Las Cartas Pueblas regían en zona islámica y los Fueros en la atlántica."], index=None, key="rad_2")
+        sel_3 = st.radio("Pregunta 3: En Castilla, ¿qué eran técnicamente las Fazañas?", ["Sentencias de los jueces de albedrío que se convertían en precedentes judiciales vinculantes.", "Leyes escritas dictadas de forma centralizada por el monarca.", "Contratos agrarios celebrados ante el Aula Real.", "Mecanismos de ordalías de la Iglesia."], index=None, key="rad_3")
+        sel_4 = st.radio("Pregunta 4: ¿Objetivo central de los Comentaristas en comparación con los Glosadores?", ["Aplicar y adaptar de forma práctica el derecho romano a las realidades y litigios reales de los tribunales.", "Estudiar exégesis textual no escrita germánica.", "Limitarse a fijar el significado literal original mediante glosas.", "Redactar el Credo Niceno ecuménico."], index=None, key="rad_4")
+        sel_5 = st.radio("Pregunta 5: ¿Característica esencial del Derecho de Asturias-León frente a Castilla?", ["Un sistema marcadamente legalista basado en la vigencia y aplicación formal de las leyes del Liber Iudiciorum.", "El predominio del derecho consuetudinario no escrito y el Fuero de Albedrío.", "La adopción del derecho islámico de las taifas.", "El rechazo absoluto de las leyes reales escritas en latín."], index=None, key="rad_5")
+        
