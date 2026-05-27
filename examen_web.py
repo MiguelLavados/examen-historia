@@ -61,7 +61,7 @@ if opcion_bloque == "--- Seleccionar ---":
     st.markdown("---")
     st.info("👈 Selecciona el Bloque 5 en el menú lateral izquierdo para cargar el examen de repetición.")
 
-# --- SECCIÓN MAESTRA: BLOQUE 5 EXAMEN REPETICIÓN (CÓDIGO PLANO LINEAL) ---
+# --- SECCIÓN MAESTRA: BLOQUE 5 EXAMEN REPETICIÓN ---
 elif opcion_bloque == "Bloque 5: Examen Repetición":
     st.title("⚖️ Examen de Repetición")
     st.subheader("Cuestionario Maestro Integrado - Temas 1, 5, 10, 13 y 18")
@@ -75,7 +75,7 @@ elif opcion_bloque == "Bloque 5: Examen Repetición":
     st.markdown("---")
     
     if modo == "Cuestionario Escrito (Memorización Gradual)":
-        st.info("⏱️ **Método Gradual Activo**: Al presionar el botón de un tema, la respuesta oficial de la cátedra aparecerá por exactamente **12 000 milisegundos (12s)** y luego se difuminará por completo. ¡Léela rápido y redacta tu respuesta!")
+        st.info("⏱️ **Método Gradual Activo**: Al presionar el botón de un tema, la respuesta oficial de la cátedra aparecerá por exactamente **12 segundos** y luego se difuminará por completo.")
         
         # Tema 1
         st.markdown("#### Tópico N.º 1: 1. Importancia de los Concilios en la España Visigoda (Toledo 3, 4, 8, 12 y 13)")
@@ -94,10 +94,11 @@ elif opcion_bloque == "Bloque 5: Examen Repetición":
         # Tema 10
         st.markdown("#### Tópico N.º 10: 10. Características del Derecho Territorial en el Reino de Castilla: Fuero de Albedrío y Fazañas")
         if st.button("👁️ Mostrar Respuesta Maestra - Tema 10", key="btn_esc_10"):
-            st.markdown('<div class="respuesta-maestra-box"><b>Respuesta de la Cátedra (10-15 Líneas):</b><br>El derecho castellano altomedieval se caracterizó por su profundo particularismo regional, su carácter puramente consuetudinario y no escrito, su origen eminentemente popular y su total independencia de la tradición romana del Liber. Al carecer de un código legal escrito y uniforme, el derecho se construyó sobre las costumbres locales arraigadas en la comunidad. De acuerdo a la tradición histórica, en el año 843 d.C. los castellanos rechazaron formalmente el Liber Iudiciorum usado en León, llegando a quemar los textos legales por considerarlos ajenos a su realidad. En su lugar, instituyeron el "Fuero de Albedrío", un sistema judicial flexible donde los jueces locales de la comunidad resolvían los pleitos basándose en su propio sentido de la justicia y criterio de equidad. Por su parte, las "Fazañas" eran las sentencias o juicios de albedrío dictados por estos magistrados populares que se convertían de inmediato en precedentes judiciales vinculantes y obligatorios para futuros casos de la misma región. Este sistema judicial configuró un ordenamiento dinámico, casuístico y alejado de la tradición romanista escrito y del monarquismo legislativo, adaptándose con rapidez a los peligros cambiantes de la frontera.</div>', unsafe_allow_html=True)
+            st.markdown('<div class="respuesta-maestra-box"><b>Respuesta de la Cátedra (10-15 Líneas):</b><br>El derecho castellano altomedieval se caracterizó por su profundo particularismo regional, su carácter puramente consuetudinario y no escrito, su origen Rooms popular y su total independencia de la tradición romana del Liber. Al carecer de un código legal escrito y uniforme, el derecho se construyó sobre las costumbres locales arraigadas en la comunidad. De acuerdo a la tradición histórica, en el año 843 d.C. los castellanos rechazaron formalmente el Liber Iudiciorum usado en León, llegando a quemar los textos legales por considerarlos ajenos a su realidad. En su lugar, instituyeron el "Fuero de Albedrío", un sistema judicial flexible donde los jueces locales de la comunidad resolvían los pleitos basándose en su propio sentido de la justicia y criterio de equidad. Por su parte, las "Fazañas" eran las sentencias o juicios de albedrío dictados por estos magistrados populares que se convertían de inmediato en precedentes judiciales vinculantes y obligatorios para futuros casos de la misma región. Este sistema judicial configuró un ordenamiento dinámico, casuístico y alejado de la tradición romanista escrito y del monarquismo legislativo, adaptándose con rapidez a los peligros cambiantes de la frontera.</div>', unsafe_allow_html=True)
         st.text_area("✍️ Redacta tu desarrollo en base a lo memorizado:", key="in_esc_10", height=110)
         st.markdown("<br>", unsafe_allow_html=True)
 
         # Tema 13
         st.markdown("#### Tópico N.º 13: 13. Formación del Derecho Común Romano Canónico")
         if st.button("👁️ Mostrar Respuesta Maestra - Tema 13", key="btn_esc_13"):
+            st.markdown('<div class="respuesta-maestra-box"><b>Respuesta de la Cátedra (10-15 Líneas):</b><br>El Derecho Común (Ius Commune) se articuló durante la Baja Edad Media europea como un sistema normativo supranacional, técnico y unificado mediante la integración del derecho romano, el canónico y el derecho feudal. Su origen se sitúa en el siglo XI tras el redescubrimiento en Italia del manuscrito clásico del Digesto de Justiniano y el nacimiento de la célebre Escuela de Bolonia en 1088 d.C. bajo la enseñanza de Irnerio. Los juristas de este período se dividieron en dos escuelas fundamentales: los Glosadores y los Comentaristas. Los Glosadores (siglos XI al XIII) analizaron los textos justinianeos de forma estrictamente teórica y exegética, aclarando el significado literal del texto a través de breves anotaciones marginales o interlineales llamadas glosas. Por el contrario, los Comentaristas o Postglosadores (siglos XIII al XV), como Bartolo de Sassoferrato, adoptaron un enfoque pragmático y utilitario, elaborando ensayos jurídicos profundos encaminados a adaptar el derecho romano teórico a las necesidades prácticas y comerciales de los tribunales medievales. Este sistema se complementó en el ámbito eclesiástico con el Decreto de Graciano (1140 d.C.), que concordó y armonizó los cánones eclesiásticos discordantes de la Iglesia, alzándose como el modelo de recepción jurídica indispensable para los monarcas que buscaban centralizar su poder legislativo.</div>', unsafe_allow_html=True)
