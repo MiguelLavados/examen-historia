@@ -2,8 +2,10 @@ import streamlit as st
 import random
 from datetime import date
 
+# Configuración de la página web optimizada para móviles y PC
 st.set_page_config(page_title="COGNUSS Extenso V2", page_icon="🎓", layout="centered")
 
+# Estilos CSS avanzados para el desvanecimiento controlado de las respuestas escritas
 st.markdown("""
 <style>
 @keyframes blurFadeOut {
@@ -28,10 +30,12 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# Validación de fecha de caducidad obligatoria (30 de Junio de 2026)
 if date.today() > date(2026, 6, 30):
     st.error("🚨 Esta aplicación ha caducado. El período de uso autorizado finalizó el 30 de Junio de 2026.")
     st.stop()
 
+# --- MENÚ LATERAL GENERAL CON LOS CRÉDITOS SOLICITADOS ---
 st.sidebar.markdown("## ⚙️ Menú Examen")
 opcion_bloque = st.sidebar.selectbox("Selecciona Bloque:", ["--- Seleccionar ---", "Bloque 5: Examen Repetición"])
 
@@ -86,10 +90,23 @@ elif opcion_bloque == "Bloque 5: Examen Repetición":
         st.markdown("<br>", unsafe_allow_html=True)
         
     else:
-        st.warning("⚠️ **Control de Memoria**: Ninguna opción viene marcada por defecto.")
-        sel_1 = st.radio("Pregunta 1: ¿Mecanismo legal de promulgación civil de los Concilios?", ["La Lex in confirmatione concilii dictada por el monarca.", "El Tomus Regius del Oficio Palatino.", "El Fuero de Albedrío del Senatus.", "El canon conciliar eclesiástico."], index=None, key="rad_1")
-        sel_2 = st.radio("Pregunta 2: ¿Diferencia entre Cartas Pueblas y Fueros extensos?", ["Las Cartas Pueblas regulaban solo condiciones económicas y agrarias de asentamiento; los Fueros extensos eran ordenamientos jurídicos municipales integrales.", "Las Cartas Pueblas eran eclesiásticas y los Fueros extensos regulaban la guerra civil.", "Las Cartas Pueblas eran escritas y los Fueros extensos costumbres orales.", "Las Cartas Pueblas regían en zona islámica y los Fueros en la atlántica."], index=None, key="rad_2")
-        sel_3 = st.radio("Pregunta 3: En Castilla, ¿qué eran técnicamente las Fazañas?", ["Sentencias de los jueces de albedrío que se convertían en precedentes judiciales vinculantes.", "Leyes escritas dictadas de forma centralizada por el monarca.", "Contratos agrarios celebrados ante el Aula Real.", "Mecanismos de ordalías de la Iglesia."], index=None, key="rad_3")
-        sel_4 = st.radio("Pregunta 4: ¿Objetivo central de los Comentaristas en comparación con los Glosadores?", ["Aplicar y adaptar de forma práctica el derecho romano a las realidades y litigios reales de los tribunales.", "Estudiar exégesis textual no escrita germánica.", "Limitarse a fijar el significado literal original mediante glosas.", "Redactar el Credo Niceno ecuménico."], index=None, key="rad_4")
-        sel_5 = st.radio("Pregunta 5: ¿Característica esencial del Derecho de Asturias-León frente a Castilla?", ["Un sistema marcadamente legalista basado en la vigencia y aplicación formal de las leyes del Liber Iudiciorum.", "El predominio del derecho consuetudinario no escrito y el Fuero de Albedrío.", "La adopción del derecho islámico de las taifas.", "El rechazo absoluto de las leyes reales escritas en latín."], index=None, key="rad_5")
+        st.warning("⚠️ **Control de Memoria**: Ninguna opción viene marcada por defecto. Recibirá corrección inmediata en cada pregunta.")
         
+        # Pregunta 1
+        st.markdown("##### **Pregunta 1** -- ¿Mecanismo legal de promulgación civil de los Concilios?")
+        sel_1 = st.radio("Opciones:", ["A) La Lex in confirmatione concilii dictada por el monarca.", "B) El Tomus Regius del Oficio Palatino.", "C) El Fuero de Albedrío del Senatus.", "D) El canon conciliar eclesiástico."], index=None, key="rad_1")
+        if sel_1:
+            if sel_1.startswith("A)"): st.success("✅ ¡Correcto!")
+            else: st.error("❌ Incorrecto. La respuesta correcta es la opción A).")
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        # Pregunta 2
+        st.markdown("##### **Pregunta 2** -- ¿Diferencia entre Cartas Pueblas y Fueros extensos?")
+        sel_2 = st.radio("Opciones:", ["A) Las Cartas Pueblas eran eclesiásticas y los Fueros extensos regulaban la guerra civil.", "B) Las Cartas Pueblas regulaban solo condiciones económicas y agrarias de asentamiento; los Fueros extensos eran ordenamientos jurídicos municipales integrales.", "C) Las Cartas Pueblas eran escritas y los Fueros extensos costumbres orales.", "D) Las Cartas Pueblas regían en zona islámica y los Fueros en la atlántica."], index=None, key="rad_2")
+        if sel_2:
+            if sel_2.startswith("B)"): st.success("✅ ¡Correcto!")
+            else: st.error("❌ Incorrecto. La respuesta correcta es la opción B).")
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        # Pregunta 3
+        st.markdown("##### **Pregunta 3** -- En Castilla, ¿qué eran técnicamente las Fazañas?")
