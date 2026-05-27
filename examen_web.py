@@ -32,29 +32,12 @@ if date.today() > date(2026, 6, 30):
     st.error("🚨 Esta aplicación ha caducado. El período de uso autorizado finalizó el 30 de Junio de 2026.")
     st.stop()
 
-# --- BANCO DE DATOS ORIGINAL CORREGIDO ---
-banco_extenso = {
-    "1. Periodo Visigodo y Liber Iudiciorum": [
-        {"p": "¿En qué consiste la teoría de la 'personalidad de las leyes'?", "a": ["Aplicación según el origen étnico", "Aplicación universal en el territorio", "Derecho exclusivo de la Iglesia", "Leyes dictadas solo por el rey"], "c": "Aplicación según el origen étnico"},
-        {"p": "¿Qué hito ocurrió en el III Concilio de Toledo (589)?", "a": ["Conversión de Recaredo al catolicismo", "Promulgación del Código de Eurico", "Redacción de la Lex Romana Visigothorum", "Caída del Reino de Toledo"], "c": "Conversión de Recaredo al catolicismo"}
-    ],
-    "2. Alta Edad Media y Derecho Local": [
-        {"p": "¿Qué característica define principalmente al derecho altomedieval?", "a": ["Particularismo jurídico y dispersión", "Centralización legislativa monárquica", "Predominio absoluto del derecho romano clásico", "Aplicación uniforme en toda la península"], "c": "Particularismo jurídico y dispersión"}
-    ],
-    "3. Derecho Territorial Castellano": [
-        {"p": "¿Qué eran las Fazañas en el derecho castellano?", "a": ["Sentencias judiciales usadas como precedentes", "Leyes dictadas por el monarca leonés", "Impuestos cobrados en la frontera", "Pruebas de ordalías eclesiásticas"], "c": "Sentencias judiciales usadas como precedentes"}
-    ],
-    "4. Recepción del Derecho Común": [
-        {"p": "¿Qué método caracterizó a la Escuela de los Glosadores?", "a": ["Análisis exegético y literal del texto romano", "Adaptación práctica a los tribunales de la época", "Estudio exclusivo del derecho consuetudinario", "Redacción de leyes reales en las Cortes"], "c": "Análisis exegético y literal del texto romano"}
-    ]
-}
-
 # --- MENÚ LATERAL GENERAL CON LOS CRÉDITOS SOLICITADOS ---
 st.sidebar.markdown("## ⚙️ Menú Examen")
 
 opcion_bloque = st.sidebar.selectbox(
     "Selecciona Bloque:",
-    ["--- Seleccionar ---", "1. Periodo Visigodo y Liber Iudiciorum", "2. Alta Edad Media y Derecho Local", "3. Derecho Territorial Castellano", "4. Recepción del Derecho Común", "Bloque 5: Examen Repetición"]
+    ["--- Seleccionar ---", "Bloque 5: Examen Repetición"]
 )
 
 st.sidebar.markdown("---")
@@ -76,9 +59,9 @@ if opcion_bloque == "--- Seleccionar ---":
     st.title("🛡️ COGNUSS EXTENSO V2")
     st.subheader("Programa creado por Miguel López Lavados | Caduca: 30-Jun-2026")
     st.markdown("---")
-    st.info("👈 Selecciona un bloque en el menú lateral izquierdo para cargar la batería de preguntas del examen.")
+    st.info("👈 Selecciona el Bloque 5 en el menú lateral izquierdo para cargar el examen de repetición.")
 
-# --- NUEVA SECCIÓN MAESTRA: BLOQUE 5 EXAMEN REPETICIÓN ---
+# --- SECCIÓN MAESTRA: BLOQUE 5 EXAMEN REPETICIÓN ---
 elif opcion_bloque == "Bloque 5: Examen Repetición":
     st.title("⚖️ Examen de Repetición")
     st.subheader("Cuestionario Maestro Integrado - Temas 1, 5, 10, 13 y 18")
@@ -111,3 +94,10 @@ elif opcion_bloque == "Bloque 5: Examen Repetición":
             "enunciado": "En el derecho territorial castellano de la Alta Edad Media, ¿qué eran técnicamente las denominadas Fazañas?",
             "alternativas": ["Sentencias de los jueces de albedrío que se convertían en precedentes judiciales vinculantes.", "Leyes escritas dictadas por el monarca para unificar los reinos cristianos de la península.", "Contratos agrarios bilaterales celebrados de forma solemne ante los funcionarios del Aula Real.", "Ordalías o juicios de Dios regulados estrictamente por las costumbres del derecho romano vulgar."],
             "correcta": "Sentencias de los jueces de albedrío que se convertían en precedentes judiciales vinculantes.",
+            "desarrollo": "El derecho castellano altomedieval se caracterizó por su profundo particularismo regional, su carácter puramente consuetudinario y no escrito, su origen eminentemente popular y su total independencia de la tradición romana del Liber. Al carecer de un código legal escrito y uniforme, el derecho se construyó sobre las costumbres locales arraigadas en la comunidad. De acuerdo a la tradición histórica, en el año 843 d.C. los castellanos rechazaron formalmente el Liber Iudiciorum usado en León, llegando a quemar los textos legales por considerarlos ajenos a su realidad. En su lugar, instituyeron el 'Fuero de Albedrío', un sistema judicial flexible donde los jueces locales de la comunidad resolvían los pleitos basándose en su propio sentido de la justicia y criterio de equidad. Por su parte, las 'Fazañas' eran las sentencias o juicios de albedrío dictados por estos magistrados populares que se convertían de inmediato en precedentes judiciales vinculantes y obligatorios para futuros casos de la misma región. Este sistema judicial configuró un ordenamiento dinámico, casuístico y alejado de la tradición romanista escrito y del monarquismo legislativo, adaptándose con rapidez a los peligros cambiantes de la frontera."
+        },
+        {
+            "id": 13, "titulo": "13. Formación del Derecho Común Romano Canónico",
+            "enunciado": "¿Cuál era el objetivo central de la Escuela de los Comentaristas o Postglosadores en comparación con los Glosadores?",
+            "alternativas": ["Aplicar y adaptar de forma práctica el derecho romano a las realidades y litigios reales de los tribunales.", "Estudiar exclusivamente las costumbres consuetudinarias no escritas de la frontera germánica.", "Limitarse a fijar el significado literal y original de las leyes de Justiniano mediante el uso de glosas.", "Redactar la profesión oficial de fe cristiana del Credo Niceno durante la celebración de concilios ecuménicos."],
+            "correcta": "Aplicar y adaptar de forma práctica el derecho romano a las realidades y litigios reales de los tribunales.",
