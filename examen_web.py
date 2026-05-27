@@ -1,147 +1,113 @@
 import streamlit as st
 import random
-from datetime import datetime
+from datetime import date
 
-# Configuración de la página web optimizada para móviles
-st.set_page_config(page_title="COGNUSS Extenso V2", page_icon="⚖️", layout="centered")
+# Configuración de la página web optimizada para móviles y PC
+st.set_page_config(page_title="COGNUSS Extenso V2", page_icon="🎓", layout="centered")
 
-# Banco de Datos Original
+# Estilos CSS avanzados para el desvanecimiento controlado de las respuestas escritas
+st.markdown("""
+<style>
+@keyframes blurFadeOut {
+    0% { opacity: 1; filter: blur(0px); }
+    75% { opacity: 1; filter: blur(0px); }
+    100% { opacity: 0; filter: blur(10px); visibility: hidden; height: 0px; padding: 0px; margin: 0px; }
+}
+.respuesta-maestra-box {
+    padding: 18px;
+    background-color: #f4f9ff;
+    border-left: 6px solid #1a73e8;
+    border-radius: 6px;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: #202124;
+    font-weight: 500;
+    animation: blurFadeOut 12s forwards;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# Validación de fecha de caducidad obligatoria (30 de Junio de 2026)
+if date.today() > date(2026, 6, 30):
+    st.error("🚨 Esta aplicación ha caducado. El período de uso autorizado finalizó el 30 de Junio de 2026.")
+    st.stop()
+
+# --- BANCO DE DATOS ORIGINAL (BLOQUES 1 AL 4 COMPATIBILIDAD) ---
 banco_extenso = {
     "1. Periodo Visigodo y Liber Iudiciorum": [
-        {"p": "¿En qué consiste la teoría de la 'personalidad de las leyes'?", "a": ["A) Aplicación por igual a todo habitante.", "B) Visigodos e hispanorromanos bajo ordenamientos separados."], "c": "B", "e": "Eurico para visigodos y Breviario de Alarico para hispanorromanos."},
-        {"p": "¿Qué hito ocurrió en el III Concilio de Toledo (589)?", "a": ["A) Cánones con fuerza de ley civil y unión Iglesia-Estado.", "B) Abolición del derecho romano vulgar."], "c": "A", "e": "Conversión al catolicismo de Recaredo para unificar espiritualmente el reino."},
-        {"p": "¿Qué norma se fijó en el IV Concilio de Toledo (633)?", "a": ["A) Monarquía puramente hereditaria.", "B) Carácter electivo de la monarquía por magnates y obispos."], "c": "B", "e": "Buscaba frenar las constantes guerras civiles ('morbus gothicus')."},
-        {"p": "¿Qué impacto territorial tuvo el Liber Iudiciorum (654)?", "a": ["A) Unificó el derecho territorialmente derogando textos previos.", "B) Otorgó plena autonomía a los duques locales."], "c": "A", "e": "Puso fin a la dualidad jurídica penal y civil peninsular."},
-        {"p": "¿Qué reforma introdujo Ervigio al Liber en 681?", "a": ["A) Dura legislación de persecution y exclusión contra judíos.", "B) Tradujo los manuscritos oficiales al romance castellano."], "c": "A", "e": "Adaptó las normas a las presiones doctrinales de la Iglesia."},
-        {"p": "¿Qué fue la versión Vulgata del Liber (Siglo VIII)?", "a": ["A) Copia custodiada de forma secreta en Roma.", "B) Edición no oficial con adiciones que ayudó a sobrevivir el texto."], "c": "B", "e": "Juristas del norte añadieron costumbres locales tras la caída toledana."}
+        {"p": "¿En qué consiste la teoría de la 'personalidad de las leyes'?", "a": ["Aplicación según el origen étnico", "Aplicación universal en el territorio", "Derecho exclusivo de la Iglesia", "Leyes dictadas solo por el rey"], "c": "Aplicación según el origen étnico"},
+        {"p": "¿Qué hito ocurrió en el III Concilio de Toledo (589)?", "a": ["Conversión de Recaredo al catolicismo", "Promulgación del Código de Eurico", "Redacción de la Lex Romana Visigothorum", "Caída del Reino de Toledo"], "c": "Conversión de Recaredo al catolicismo"}
     ],
     "2. Alta Edad Media y Derecho Local": [
-        {"p": "¿Cómo afectó la invasión de 711 al norte cristiano?", "a": ["A) Colapso estatal, dispersión legal y auge de costumbre oral.", "B) Aplicación inmediata del Corpus Iuris en Asturias."], "c": "A", "e": "El aislamiento geográfico fragmentó la ley escrita en la península."},
-        {"p": "¿Qué eran las Fazañas castellanas medievales?", "a": ["A) Sentencias de jueces (albedrío) ante la falta de ley escrita.", "B) Leyes territoriales obligatorias del rey de León."], "c": "A", "e": "Fijaban precedentes basados en las costumbres locales y la equidad."},
-        {"p": "¿Cuál era la diferencia entre Fueros Breves y Extensos?", "a": ["A) Breves daban exenciones básicas; extensos regulaban la vida civil.", "B) Breves para siervos, extensos para la alta nobleza."], "c": "A", "e": "Los extensos (siglos XII-XIII) protegían la autonomía frente al rey."},
-        {"p": "¿Cuál era el fin de las Cartas Pueblas en la frontera?", "a": ["A) Financiar con tributos las campañas militares.", "B) Atraer población mediante propiedad de tierra y perdón de delitos."], "c": "B", "e": "Se requería asegurar militarmente las zonas colindantes con Al-Ándalus."}
+        {"p": "¿Qué característica define principalmente al derecho altomedieval?", "a": ["Particularismo jurídico y dispersión", "Centralización legislativa monárquica", "Predominio absoluto del derecho romano clásico", "Aplicación uniforme en toda la península"], "c": "Particularismo jurídico y dispersión"}
     ],
-    "3. Baja Edad Media y Derecho Comun": [
-        {"p": "¿Qué fuentes combinadas dieron origen al Derecho Común?", "a": ["A) Corpus Iuris Civilis, Derecho Canónico y Derecho Feudal.", "B) Fuero Juzgo, Siete Partidas y Ordenamiento de Alcalá."], "c": "A", "e": "Surgió formalmente a partir del siglo XII en la Universidad de Bolonia."},
-        {"p": "¿Cuál era el método de estudio de los Glosadores?", "a": ["A) Notas aclaratorias marginales (glosas) al texto literal romano.", "B) Redactar códigos modernos basados en la razón natural."], "c": "A", "e": "Su enfoque era strictly exegético para recuperar la pureza clásica."},
-        {"p": "¿En qué se diferenciaban los Postglosadores o Comentaristas?", "a": ["A) Abandonaron el uso técnico del latín académico.", "B) Adaptaron los textos romanos a la práctica de su época."], "c": "B", "e": "Su método pragmático permitió aplicar el derecho romano en tribunales."},
-        {"p": "¿Por qué las monarquías impulsaron el Derecho Común?", "a": ["A) Sostenía que la voluntad del monarca tiene fuerza de ley.", "B) Fomentaba libertades democráticas vecinales."], "c": "A", "e": "Utilizaron el derecho técnico para socavar los privilegios feudales."},
-        {"p": "¿Por qué las Siete Partidas no se aplicaron de inmediato?", "a": ["A) Resistencia de nobles y municipios que defendían sus fueros.", "B) El clero consideró que contradecía los decretales."], "c": "A", "e": "El fuerte absolutismo del código real provocó el rechazo estamental."}
+    "3. Derecho Territorial Castellano": [
+        {"p": "¿Qué eran las Fazañas en el derecho castellano?", "a": ["Sentencias judiciales usadas como precedentes", "Leyes dictadas por el monarca leonés", "Impuestos cobrados en la frontera", "Pruebas de ordalías eclesiásticas"], "c": "Sentencias judiciales usadas como precedentes"}
     ],
-    "4. Unificacion Legislativa de Castilla": [
-        {"p": "¿Qué conflicto resolvió el Ordenamiento de Alcalá (1348)?", "a": ["A) Fijó una escala jerárquica de fuentes obligatorio.", "B) Decretó la sumisión total al tribunal de la Rota."], "c": "A", "e": "Estableció con claridad qué leyes aplicar en primer y segundo orden."},
-        {"p": "Según Alcalá, ¿cuál era la posición de las Siete Partidas?", "a": ["A) Aplicación inmediata en primer lugar penal.", "B) Tercer lugar, aplicándose de forma supletoria."], "c": "B", "e": "Entraron en vigor oficial subordinadas a leyes reales y fueros usar."},
-        {"p": "¿Qué fue el Ordenamiento de Montalvo (1484)?", "a": ["A) Recopilación oficial para unificar leyes y pragmáticas dispersas.", "B) Tratado de paz militar con las milicias de frontera."], "c": "A", "e": "Encargado por los Reyes Católicos para robustecer el Estado Moderno."}
+    "4. Recepción del Derecho Común": [
+        {"p": "¿Qué método caracterizó a la Escuela de los Glosadores?", "a": ["Análisis exegético y literal del texto romano", "Adaptación práctica a los tribunales de la época", "Estudio exclusivo del derecho consuetudinario", "Redacción de leyes reales en las Cortes"], "c": "Análisis exegético y literal del texto romano"}
     ]
 }
 
-# Control de Caducidad
-if datetime.now() > datetime(2026, 6, 30):
-    st.error("❌ ENTORNO DE EVALUACIÓN CADUCADO")
-    st.stop()
+# --- MENÚ LATERAL GENERAL CON LOS CRÉDITOS SOLICITADOS ---
+st.sidebar.markdown("## ⚙️ Menú Examen")
 
-# Inicialización de variables de estado fijas en memoria (Evita lag)
-if 'preguntas' not in st.session_state:
-    st.session_state.preguntas = []
-    st.session_state.respuestas_usuario = {}
-    st.session_state.indice_actual = 0
-    st.session_state.examen_activo = False
-    st.session_state.finalizado = False
+opcion_bloque = st.sidebar.selectbox(
+    "Selecciona Bloque:",
+    ["--- Seleccionar ---", "1. Periodo Visigodo y Liber Iudiciorum", "2. Alta Edad Media y Derecho Local", "3. Derecho Territorial Castellano", "4. Recepción del Derecho Común", "Bloque 5: Examen Repetición"]
+)
 
-# Título de la App
-st.title("📚 COGNUSS EXTENSO V2")
-st.caption("Programa creado por Miguel López Lavados | Caduca: 30-Jun-2026")
-st.markdown("---")
+st.sidebar.markdown("---")
+st.sidebar.markdown("### 👥 Propiedad Intelectual & Créditos")
+st.sidebar.info("""
+* **Profesor Titular**: Dr. Oscar Enrique Dávila  
+* **Recopilación (Escribana)**: Danitza Araya  
+* **Desarrollador**: Miguel López Lavados  
+* **Agente Colaborador IA**: IA (Tu Asistente)  
+* **Motor de Conocimientos**: COGNUSS 2  
 
-# Panel de control lateral
-st.sidebar.header("⚙️ Menú Examen")
-bloques = list(banco_extenso.keys())
-opcion_bloque = st.sidebar.selectbox("Selecciona Bloque:", ["--- Seleccionar ---"] + bloques + ["Todo Mezclado"])
-modo = st.sidebar.radio("Modalidad:", ["Alternativas", "Escrito (Desarrollo)"])
+---
+🔒 **Derechos Reservados © 2026**  
+📅 *Fecha de Caducidad: 30 de Jun-2026*
+""")
 
-if st.sidebar.button("🚀 Iniciar Test"):
-    if opcion_bloque != "--- Seleccionar ---":
-        if opcion_bloque == "Todo Mezclado":
-            st.session_state.preguntas = [q for b in banco_extenso.values() for q in b]
-            random.shuffle(st.session_state.preguntas)
-        else:
-            st.session_state.preguntas = banco_extenso[opcion_bloque].copy()
-        
-        st.session_state.respuestas_usuario = {}
-        st.session_state.indice_actual = 0
-        st.session_state.examen_activo = True
-        st.session_state.finalizado = False
-    else:
-        st.sidebar.error("Selecciona un bloque válido.")
+# --- INTERFAZ DINÁMICA ---
+if opcion_bloque == "--- Seleccionar ---":
+    st.title("🛡️ COGNUSS EXTENSO V2")
+    st.subheader("Programa creado por Miguel López Lavados | Caduca: 30-Jun-2026")
+    st.markdown("---")
+    st.info("👈 Selecciona un bloque en el menú lateral izquierdo para cargar la batería de preguntas del examen.")
 
-# Lógica de navegación rápida (Pregunta por pregunta)
-if st.session_state.examen_activo and not st.session_state.finalizado:
-    total = len(st.session_state.preguntas)
-    idx = st.session_state.indice_actual
-    p = st.session_state.preguntas[idx]
-    
-    st.write(f"### 📋 Pregunta {idx + 1} de {total}")
-    st.info(p['p'])
-    
-    # Capturar respuesta sin refrescar bruscamente la página
-    if modo == "Alternativas":
-        opcion_guardada = st.session_state.respuestas_usuario.get(idx, None)
-        indice_defecto = p['a'].index(opcion_guardada) if opcion_guardada in p['a'] else 0
-        
-        resp = st.radio("Elige tu opción:", p['a'], index=indice_defecto, key=f"radio_{idx}")
-        st.session_state.respuestas_usuario[idx] = resp
-    else:
-        texto_guardado = st.session_state.respuestas_usuario.get(idx, "")
-        resp_t = st.text_area("Escribe tu respuesta analítica:", value=texto_guardado, key=f"text_{idx}")
-        st.session_state.respuestas_usuario[idx] = resp_t
-        
-        st.markdown("**Criterio de Evaluación de Cátedra:**")
-        st.caption(p['e'])
-        evalua = st.radio("¿Tu respuesta cumple el criterio?", ["No evaluado", "Sí (Sumar punto)", "No (Cero puntos)"], key=f"eval_{idx}")
-        st.session_state.respuestas_usuario[f"eval_{idx}"] = evalua
-
+# --- NUEVA SECCIÓN MAESTRA: BLOQUE 5 EXAMEN REPETICIÓN ---
+elif opcion_bloque == "Bloque 5: Examen Repetición":
+    st.title("⚖️ Examen de Repetición")
+    st.subheader("Cuestionario Maestro Integrado - Temas 1, 5, 10, 13 y 18")
     st.markdown("---")
     
-    # Botones de navegación en horizontal corregidos para móviles
-    col1, col2, col3 = st.columns(3)
+    modo = st.radio(
+        "👉 **Selecciona la modalidad de evaluación para este bloque:**",
+        ["Cuestionario Escrito (Memorización Gradual)", "Test de Selección Múltiple (Alternativas Cortas)"],
+        index=0
+    )
+    st.markdown("---")
     
-    with col1:
-        if idx > 0:
-            if st.button("⬅️ Anterior"):
-                st.session_state.indice_actual -= 1
-                st.rerun()
-                
-    with col2:
-        if idx < total - 1:
-            if st.button("Siguiente ➡️"):
-                st.session_state.indice_actual += 1
-                st.rerun()
-                
-    with col3:
-        if st.button("📥 Terminar"):
-            st.session_state.finalizado = True
-            st.rerun()
-
-# Pantalla final de Resultados (Súper rápida)
-elif st.session_state.finalizado:
-    st.success("## 📊 Resultados de la Evaluación")
-    puntos = 0
-    total = len(st.session_state.preguntas)
-    
-    for idx, p in enumerate(st.session_state.preguntas):
-        st.markdown(f"**{idx + 1}. {p['p']}**")
-        resp_u = st.session_state.respuestas_usuario.get(idx, "")
-        
-        if modo == "Alternativas":
-            if resp_u and resp_u.startswith(p['c']):
-                st.success(f"Correcto. Respondiste: {resp_u}")
-                puntos += 1
-            else:
-                st.error(f"Incorrecto. Respondiste: {resp_u} | Correcta: {p['c']}")
-        else:
-            eval_u = st.session_state.respuestas_usuario.get(f"eval_{idx}", "")
-            if eval_u == "Sí (Sumar punto)":
-                puntos += 1
-                st.success("Punto aprobado en autoevaluación.")
-            else:
-                st.info("No sumó puntaje.")
+    banco_repeticion = [
+        {
+            "id": 1, "titulo": "1. Importancia de los Concilios en la España Visigoda (Toledo 3, 4, 8, 12 y 13)",
+            "enunciado": "¿Mediante qué mecanismo legal las decisiones aprobadas unánimemente en los Concilios de Toledo se promulaban como leyes civiles del Reino?",
+            "alternativas": ["La Lex in confirmatione concilii dictada por el monarca.", "El Tomus Regius entregado unilateralmente por el Oficio Palatino.", "El Fuero de Albedrío decretado de forma oral por el Senatus.", "El canon conciliar de valor exclusivamente eclesiástico."],
+            "correcta": "La Lex in confirmatione concilii dictada por el monarca.",
+            "desarrollo": "Los Concilios de Toledo se consolidaron como asambleas político-religiosas y órganos colegisladores fundamentales tras la conversión del reino visigodo al catolicismo en el año 589 d.C. Bajo esta dinámica, el monarca junto al Aula Real fijaba la agenda temática inaugurando las sesiones y entregando el Tomus Regius, que contenía los proyectos de ley que los obispos debían estudiar, debatir y corregir de manera unánime. Los acuerdos resultantes se transformaban en cánones conciliares y se promulgaban formalmente como leyes civiles del reino mediante la Lex in confirmatione concilii dictada por el monarca. El III Concilio (589 d.C.) decretó la conversión del rey Recaredo, unificando religiosamente el territorio. El IV Concilio (633 d.C.), presidido por San Isidoro, institucionalizó la monarquía electiva mediante el canon 75 para regular la sucesión real y combatir el 'morbo gótico'. El VIII Concilio (653 d.C.) legitimó el acceso al trono de Recesvinto y redactó la histórica primera edición del Liber Iudiciorum. El XII Concilio (680 d.C.) validó la polémica sucesión de Ervigio frente a Wamba y endureció drásticamente la legislación antisemita. Finalmente, el XIII Concilio (683 d.C.) limitó el absolutismo monárquico al otorgar el 'Habeas Corpus Visigodo', brindando sólidas garantías judiciales a los nobles frente a arrestos arbitrarios de la corona."
+        },
+        {
+            "id": 5, "titulo": "5. El Derecho Local en la Alta Edad Media: Cartas Pueblas y Fueros",
+            "enunciado": "¿Qué diferencia jurídica fundamental existía en la Alta Edad Media entre las Cartas Pueblas y los Fueros extensos?",
+            "alternativas": ["Las Cartas Pueblas regulaban solo condiciones económicas y agrarias de asentamiento; los Fueros extensos eran ordenamientos jurídicos municipales integrales.", "Las Cartas Pueblas eran códigos eclesiásticos y los Fueros extensos regulaban la guerra civil.", "Las Cartas Pueblas eran de origen romano-germánico escrito y los Fueros extensos eran costumbres orales.", "Las Cartas Pueblas regían en la España islámica y los Fueros extensos en la zona atlántica."],
+            "correcta": "Las Cartas Pueblas regulaban solo condiciones económicas y agrarias de asentamiento; los Fueros extensos eran ordenamientos jurídicos municipales integrales.",
+            "desarrollo": "El derecho local altomedieval eclosionó con fuerza debido a la profunda fragmentación política de la península y a la imperiosa necesidad de los reyes cristianos de repoblar las tierras ganadas a los musulmanes tras la invasión del 711 d.C. En este escenario de frontera, las Cartas Pueblas constituyeron el tipo documental más rudimentario y primario, limitándose a regular exclusivamente las condiciones agrarias y económicas mínimas para el asentamiento de los colonos. Los Fueros (tanto breves como extensos) evolucionaron a partir de estas cartas, otorgando a los municipios un estatuto jurídico particular, privilegios de exención fiscal y una marcada autonomía organizativa. Los fueros breves fijaban las libertades básicas indispensables para atraer habitantes a las zonas de peligro militar fronterizo. Posteriormente, los fueros extensos de los siglos XII y XIII (como el célebre modelo de Cuenca-Teruel) desarrollaron ordenamientos jurídicos íntegros y complejos que abarcaban derecho civil, penal, procesal y organizativo municipal. Este marcado particularismo jurídico generó un mosaico de derechos locales autónomos que debilitó temporalmente la potestad legislativa centralizada de la corona, moldeando el autogobierno comunal."
+        },
+        {
+            "id": 10, "titulo": "10. Características del Derecho Territorial en el Reino de Castilla: Fuero de Albedrío y Fazañas",
+            "enunciado": "En el derecho territorial castellano de la Alta Edad Media, ¿qué eran técnicamente las denominadas Fazañas?",
+            "alternativas": ["Sentencias de los jueces de albedrío que se convertían en precedentes judiciales vinculantes.", "Leyes escritas dictadas por el monarca para unificar los reinos cristianos de la península.", "Contratos agrarios bilaterales celebrados de forma solemne ante los funcionarios del Aula Real.", "Ordalías o juicios de Dios regulados estrictamente por las costumbres del derecho romano vulgar."],
+            "correcta": "Sentencias de los jueces de albedrío que se convertían en precedentes judiciales vinculantes.",
